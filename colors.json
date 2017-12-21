@@ -1,0 +1,30 @@
+{ 
+	"white" : {
+		"color" : "color(230, 15)",
+		"draw_colors" : {
+			"robins_egg": "pos",
+			"bright_blue": "pos",
+			"navy": "pos",
+			"blue_grey": "neg",
+			"grey": "neg",
+			"orange": "pos",
+			"pink": "pos",
+			"black": "neg"
+		}
+	},
+
+	"blue" : {
+		"color" : "color(230, 15)",
+		"draw_colors" : {
+			"robins_egg": "pos",
+			"bright_blue": "pos",
+			"navy": "pos",
+			"blue_grey": "neg",
+			"grey": "neg",
+			"orange": "pos",
+			"pink": "pos",
+			"black": "neg"
+		}
+	}
+
+}
