@@ -2,7 +2,7 @@ import java.util.Map;
 import java.util.List;
 import java.util.Random;
 
-JSONArray pos_values;
+JSONArray json;
 
 //  TO DO
 //  1. create hashmap for the output clouds & count
@@ -12,13 +12,12 @@ JSONArray pos_values;
 //  4. copy over data.csv and start new one
 //  5. THEN reorganize/group function types
 //  6. comment up this bitch and remove legacy code/ prints
-//  7. rename variables num, sz, feeling, etc more accurately 
+//  7. rename variables sz, feeling, etc more accurately 
 //  8. check edge cases, make sure you've seen all colors/cloud names
 
 Table table;
-int num = floor(random(1, 15));
 float sz = random(1, 5);
-String [] positive_words = {};
+String [] positive_words;
 
 float x1, y1, x2, y2; // function domain
 float step, y; // step = step within domain
@@ -60,7 +59,6 @@ boolean go = true;
 
 float amount = random(1, 2);
 int func_type = floor(random(1, 21));
-//int func_type = 16;
 
 HashMap<String, Integer> okList = new HashMap<String, Integer>();
 Random r = new Random();
@@ -81,14 +79,38 @@ void setup() {
   println(sz + ", " + amount);
   
   
-  pos_values = loadJSONArray("new_pos_list.json");
+  json = loadJSONArray("new_pos_list.json");
   
-  for (int i = 0; i < pos_values.size(); i++) {
-      //JSONObject cloudstuff = pos_values.getJSONObject(i);
-       positive_words[i] =  pos_values.getString(i);
+ println(json);
+ 
+  positive_words = json.getStringArray();
+ 
+for (int i = 0; i < json.size(); i ++){
+  println(positive_words[i]);
 }
+ 
+ //for (int i = 0; i < pos_values.size(); i++){
+   
+ //}
+ 
+ //StringList blah = new StringList(pos_values);
+ 
+ //println(blah);
+ //println(pos_values.size());
+ 
+ //for (int i = 0; i < pos_values.size(); i++) {
+  //String obj = pos_values.getString(i);
+  //positive_words.append(word.toString());
+  //println(obj);
+//}
   
+  //for (int i = 0; i < pos_values.size(); i++) {
+      //JSONObject cloudstuff = pos_values.getJSONObject(i);
+      //println(pos_values.getString(i));
+      // positive_words.append(pos_values.getString(i));
+//}
   
+ // 
  
  // switch takes a bg color, then lists cloud color with its 
  // corresponding pos/neg value
@@ -360,7 +382,7 @@ void draw() {
       if (y>y2) {
         go = false;
         if (word == 1){
-          feeling = positive_words[floor(random(0, positive_words.length))];
+          feeling = positive_words[(floor(random(0, json.size()+1)))];
           cloud_name = feeling + clouds[floor(random(0, clouds.length))] + ".jpg";
           println(cloud_name);
         }
@@ -369,10 +391,12 @@ void draw() {
           cloud_name = feeling + clouds[floor(random(0, clouds.length))] + ".jpg";
           println(cloud_name);
         }
+        
+        
+        // ~~~~~~~~~SAVING FOR MY OWN SANITY/FINDING GOOD NUMBERS
         TableRow row = table.addRow();
         row.setString("name", cloud_name);
         row.setInt("func", func_type);
-        row.setInt("num", num);
         row.setFloat("sz", sz);
         row.setFloat("amount", amount);
         // maybe only spit these out if a pdj type is used?????????????????
@@ -386,6 +410,13 @@ void draw() {
     }
   }
 }
+ 
+ 
+ 
+ 
+ 
+//~~~~~~~~~~~~~~~~~DRAW CASES~~~~~~~~~~~~~~~~~~~~~`
+ 
  
 void drawVariation(float x, float y) {
   PVector v = new PVector(x,y);
@@ -599,7 +630,7 @@ String[] clouds = {
   "_altocumulus_floccus_lacunosus",
   "_altocumulus_virga",
   "_altocumulus_mammatus",
-  "_altocumulus cumulogenitus",
+  "_altocumulus_cumulogenitus",
   "_altocumulus_cumulonimbogenitus",
   "_altocumulus_cirrocumulomutatus",
   "_altocumulus_altostratomutatus",
