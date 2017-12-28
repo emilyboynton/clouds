@@ -7,20 +7,21 @@ JSONArray json;
 //  TO DO
 //  1. create hashmap for the output clouds & count
 //      A. also add new var/cond for count
-//  2. import json lists of vocab? maybe hash them? also maybe colors?
+//  2. maybe hash them? also maybe colors?
 //  3. rework the pos/neg values
-//  4. copy over data.csv and start new one
+//  4. copy over data.csv and start new one --why?
 //  5. THEN reorganize/group function types
 //  6. comment up this bitch and remove legacy code/ prints
 //  7. rename variables sz, feeling, etc more accurately 
 //  8. check edge cases, make sure you've seen all colors/cloud names
 
-Table table;
-float sz = random(1, 5);
-String [] positive_words;
+float sz = random(1, 2);
+String [] positive_words, negative_words, clouds;
 
 float x1, y1, x2, y2; // function domain
 float step, y; // step = step within domain
+
+int pos_size, neg_size, clouds_size;
 
 //only used in pdj d_pdj functions
 float pdj_a = random(1, 3);
@@ -31,46 +32,21 @@ float pdj_d = random(-1, 1);
 //
 String feeling, cloud_name;
 
-// COLORS WILL CONTAIN ALPHA VALUES...
-// THEY WILL BE IGNORED FOR BACKGROUNDS 
-HashMap<String, Integer> colors = new HashMap<String, Integer>();
-{
-  colors.put("white", color(230, 15));
-  colors.put("light_yellow", color(234, 233, 218, 15));
-  colors.put("yellow", color(240, 242, 167, 15));
-  colors.put("robins_egg", color(143, 182, 193, 15));
-  colors.put("bright_blue", color(15, 98, 155, 10));
-  colors.put("periwinkle", color(91, 111, 178, 15));
-  colors.put("light_periwinkle", color(172, 188, 239, 15));
-  colors.put("navy", color(24, 24, 68, 10));
-  colors.put("blue_grey", color(40, 80, 107, 10));
-  colors.put("grey", color(92, 95, 96, 10));
-  colors.put("light_grey", color(198, 15));
-  colors.put("orange", color(237, 203, 123, 10));
-  colors.put("light_pink", color(232, 220, 218, 15));
-  colors.put("pink", color(130, 97, 121, 15));
-  colors.put("black", color(5,15));
-}
+
 
 HashMap<String, Integer> used_clouds = new HashMap<String, Integer>();
 
-int st, word;
+int st;
+String pos_or_neg;
 boolean go = true;
 
 float amount = random(1, 2);
 int func_type = floor(random(1, 21));
 
-HashMap<String, Integer> okList = new HashMap<String, Integer>();
-Random r = new Random();
-Random rc = new Random();
-List<String> keys = new ArrayList<String>(colors.keySet());
-String rKey;
 
-String rand_color = keys.get(rc.nextInt(keys.size()));
-color bg = colors.get(rand_color);
+int background, foreground;
 
 void setup() {
-  loadData();
   size(600, 600);
   smooth(8);
   noFill();
@@ -80,292 +56,44 @@ void setup() {
   
   
   json = loadJSONArray("new_pos_list.json");
-  
- println(json);
- 
   positive_words = json.getStringArray();
- 
-for (int i = 0; i < json.size(); i ++){
-  println(positive_words[i]);
-}
- 
- //for (int i = 0; i < pos_values.size(); i++){
-   
- //}
- 
- //StringList blah = new StringList(pos_values);
- 
- //println(blah);
- //println(pos_values.size());
- 
- //for (int i = 0; i < pos_values.size(); i++) {
-  //String obj = pos_values.getString(i);
-  //positive_words.append(word.toString());
-  //println(obj);
-//}
+  pos_size = json.size();
   
-  //for (int i = 0; i < pos_values.size(); i++) {
-      //JSONObject cloudstuff = pos_values.getJSONObject(i);
-      //println(pos_values.getString(i));
-      // positive_words.append(pos_values.getString(i));
-//}
+  json = loadJSONArray("new_neg_list.json");
+  negative_words = json.getStringArray();
+  neg_size = json.size();
   
- // 
- 
- // switch takes a bg color, then lists cloud color with its 
- // corresponding pos/neg value
- switch(rand_color){
-   case "white":
-      {
-        okList.put("robins_egg", 1);
-        okList.put("bright_blue", 1);
-        okList.put("navy", 1);
-        okList.put("blue_grey", 0);
-        okList.put("grey", 0);
-        okList.put("orange", 1);
-        okList.put("pink", 1);
-        okList.put("black", 0);
-      }
-     break;
-   case "bright_blue":
-      {
-        okList.put("white", 1);
-        okList.put("light_yellow", 1);
-        okList.put("yellow", 1);
-        okList.put("robins_egg", 1);
-        okList.put("periwinkle", 1);
-        okList.put("navy", 0);
-        okList.put("light_grey", 1);
-        okList.put("orange", 0);
-        okList.put("light_pink", 1);
-        okList.put("pink", 0);
-        okList.put("black", 0);
-      }
-     break;
-   case "grey":   
-      {
-        okList.put("white", 0);
-        okList.put("light_yellow", 0);
-        okList.put("yellow", 0);
-        okList.put("robins_egg", 1);
-        okList.put("periwinkle", 0);
-        okList.put("light_periwinkle", 0);
-        okList.put("navy", 0);
-        okList.put("light_grey", 0);
-        okList.put("orange", 0);
-        okList.put("light_pink", 0);
-        okList.put("pink", 0);
-        okList.put("black", 0);
-      }
-     break;
-   case "navy":
-      {
-        okList.put("white", 1);
-        okList.put("light_yellow", 1);
-        okList.put("yellow", 1);
-        okList.put("robins_egg", 1);
-        okList.put("bright_blue", 1);
-        okList.put("periwinkle", 1);
-        okList.put("light_periwinkle", 1);
-        okList.put("blue_grey", 0);
-        okList.put("grey", 0);
-        okList.put("light_grey", 1);
-        okList.put("orange", 1);
-        okList.put("light_pink", 1);
-        okList.put("pink", 0);
-        okList.put("black", 0);
-      }
-     break;
-   case "light_yellow":
-      {
-        okList.put("robins_egg", 1);
-        okList.put("bright_blue", 1);
-        okList.put("periwinkle", 1);
-        okList.put("light_periwinkle", 1);
-        okList.put("navy", 0);
-        okList.put("blue_grey", 0);
-        okList.put("grey", 0);
-        okList.put("light_grey", 0);
-        okList.put("orange", 1);
-        okList.put("pink", 1);
-        okList.put("black", 0);
-      }
-       break;
-   case "robins_egg":
-      {
-        okList.put("white", 1);
-        okList.put("light_yellow", 1);
-        okList.put("yellow", 1);
-        okList.put("periwinkle", 1);
-        okList.put("light_periwinkle", 1);
-        okList.put("navy", 0);
-        okList.put("blue_grey", 0);
-        okList.put("grey", 0);
-        okList.put("light_grey", 1);
-        okList.put("orange", 1);
-        okList.put("pink", 1);
-        okList.put("light_pink", 1);
-        okList.put("black", 0);
-      }
-    break;
-    case "blue_grey":
-      {
-        okList.put("white", 1);
-        okList.put("light_yellow", 1);
-        okList.put("robins_egg", 1);
-        okList.put("periwinkle", 0);
-        okList.put("light_periwinkle", 1);
-        okList.put("navy", 0);
-        okList.put("light_grey", 1);
-        okList.put("orange", 0);
-        okList.put("pink", 0);
-        okList.put("light_pink", 1);
-        okList.put("black", 0);
-      }
-      break;
-    case "pink":
-      {
-        okList.put("white", 1);
-        okList.put("light_yellow", 1);
-        okList.put("yellow", 1);
-        okList.put("robins_egg", 1);
-        okList.put("bright_blue", 1);
-        okList.put("light_periwinkle", 1);
-        okList.put("navy", 1);
-        okList.put("light_grey", 1);
-        okList.put("orange", 1);
-        okList.put("light_pink", 1);
-        okList.put("black", 0);
-      }
-      break;
-    case "orange":
-      {
-        okList.put("white", 1);
-        okList.put("light_yellow", 1);
-        okList.put("yellow", 1);
-        okList.put("robins_egg", 1);
-        okList.put("bright_blue", 1);
-        okList.put("periwinkle", 1);
-        okList.put("light_periwinkle", 1);
-        okList.put("navy", 0);
-        okList.put("grey", 0);
-        okList.put("light_grey", 1);
-        okList.put("pink", 1);
-        okList.put("light_pink", 1);
-        okList.put("black", 0);
-      }
-      break;
-    case "yellow":
-      {
-        okList.put("robins_egg", 0);
-        okList.put("bright_blue", 0);
-        okList.put("periwinkle", 0);
-        okList.put("light_periwinkle", 1);
-        okList.put("navy", 0);
-        okList.put("grey", 0);
-        okList.put("light_grey", 1);
-        okList.put("pink", 1);
-        okList.put("black", 0);
-      }       
-      break;   
-    case "periwinkle":
-      {
-        okList.put("white", 1);
-        okList.put("light_yellow", 1);
-        okList.put("yellow", 1);
-        okList.put("robins_egg", 1);
-        okList.put("bright_blue", 1);
-        okList.put("light_periwinkle", 1);
-        okList.put("navy", 1);
-        okList.put("blue_grey", 0);
-        okList.put("grey", 0);
-        okList.put("light_grey", 1);
-        okList.put("orange", 1);
-        okList.put("light_pink", 1);
-        okList.put("pink", 0);
-        okList.put("black", 0);
-      }     
-      break;
-    case "light_periwinkle":
-      {
-        okList.put("white", 1);
-        okList.put("light_yellow", 1);
-        okList.put("yellow", 1);
-        okList.put("robins_egg", 0);
-        okList.put("bright_blue", 1);
-        okList.put("periwinkle", 1);
-        okList.put("navy", 0);
-        okList.put("blue_grey", 0);
-        okList.put("grey", 0);
-        okList.put("orange", 0);
-        okList.put("light_pink", 1);
-        okList.put("pink", 0);
-        okList.put("black", 0);
-      }
-      break;   
-    case "light_grey":
-      {
-        okList.put("white", 0);
-        okList.put("light_yellow", 0);
-        okList.put("yellow", 0);
-        okList.put("robins_egg", 1);
-        okList.put("bright_blue", 0);
-        okList.put("periwinkle", 0);
-        okList.put("navy", 0);
-        okList.put("blue_grey", 0);
-        okList.put("grey", 0);
-        okList.put("orange", 0);
-        okList.put("pink", 0);
-        okList.put("black", 0);
-      }
-      break;
-     case "light_pink":
-      {
-        okList.put("robins_egg", 1);
-        okList.put("bright_blue", 0); 
-        okList.put("periwinkle", 0); 
-        okList.put("light_periwinkle", 1); 
-        okList.put("navy", 1); 
-        okList.put("blue_grey", 0);
-        okList.put("grey", 0);
-        okList.put("orange", 1);
-        okList.put("pink", 1);
-        okList.put("black", 0);
-      }
-      break;
-    case "black":
-      {
-        okList.put("white", 1);
-        okList.put("light_yellow", 0);
-        okList.put("yellow", 0);
-        okList.put("robins_egg", 0);
-        okList.put("bright_blue", 1);
-        okList.put("periwinkle", 0);
-        okList.put("light_periwinkle", 0);
-        okList.put("navy", 0);
-        okList.put("blue_grey", 0);
-        okList.put("grey", 0);
-        okList.put("light_grey", 0);
-        okList.put("orange", 0);
-        okList.put("light_pink", 0);
-        okList.put("pink", 1);
-      }
-      break;
-  } //  END SWITCH
-  println(rand_color);
+  json = loadJSONArray("clouds.json");
+  clouds = json.getStringArray();
+  clouds_size = json.size();
   
-  do {
-    r = new Random();
-    rKey = keys.get(r.nextInt(keys.size()));
-    st = colors.get(rKey);
-    if (okList.containsKey(rKey)){
-      word = okList.get(rKey);
-    }
-  } while (!okList.containsKey(rKey));
+  //~~~~~~~~~~~~~~~~~GET BACKGROUND/SKY COLOR~~~~~~~~~~~~~~~~~~~~~
+    json = loadJSONArray("colors.json");
+    int rand = floor(random(0, json.size()));
+    JSONObject background_obj = json.getJSONObject(rand);
+    println(background_obj.getString("name"));
+    String background_name = background_obj.getString("name");
+    background = color(background_obj.getInt("red"), background_obj.getInt("green"), background_obj.getInt("blue"));
+    background(background);
 
-  println(rKey);
-  background(bg);
-  stroke(st);  
+
+  //~~~~~~~~~~~~~~~~~GET FOREGROUND/CLOUD COLOR~~~~~~~~~~~~~~~~~~~~~
+    JSONObject drawColors_obj = background_obj.getJSONObject("draw_colors");  
+    String foreground_name = background_name;
+    while (foreground_name == background_name){
+      rand = floor(random(0, json.size()));
+      JSONObject foreground_obj = json.getJSONObject(rand);
+      foreground_name = foreground_obj.getString("name");    
+      pos_or_neg = drawColors_obj.getString(foreground_name);
+      foreground = color(foreground_obj.getInt("red"),
+      foreground_obj.getInt("green"),
+      foreground_obj.getInt("blue"),
+      foreground_obj.getInt("alpha"));
+    }
+    
+    println(foreground_name, pos_or_neg);
+  
+  stroke(foreground);  
   x1=y1=-sz;
   x2=y2=sz;
   y=y1;
@@ -374,38 +102,19 @@ for (int i = 0; i < json.size(); i ++){
 
 void draw() {
   if (go) {
-    for (int i=0; (i<20)&go; i++) { // draw 20 lines at once
+    for (int i=0; (i<20) && go; i++) { // draw 20 lines at once
       for (float x=x1; x<=x2; x+=step) {
         drawVariation(x, y);
       }
       y+=step;
       if (y>y2) {
         go = false;
-        if (word == 1){
-          feeling = positive_words[(floor(random(0, json.size()+1)))];
-          cloud_name = feeling + clouds[floor(random(0, clouds.length))] + ".jpg";
-          println(cloud_name);
+        if (pos_or_neg == "pos"){
+          nameCloud(positive_words, pos_size);
         }
         else {
-          feeling = negative_words[floor(random(0, negative_words.length))];
-          cloud_name = feeling + clouds[floor(random(0, clouds.length))] + ".jpg";
-          println(cloud_name);
+          nameCloud(negative_words, neg_size);
         }
-        
-        
-        // ~~~~~~~~~SAVING FOR MY OWN SANITY/FINDING GOOD NUMBERS
-        TableRow row = table.addRow();
-        row.setString("name", cloud_name);
-        row.setInt("func", func_type);
-        row.setFloat("sz", sz);
-        row.setFloat("amount", amount);
-        // maybe only spit these out if a pdj type is used?????????????????
-        row.setFloat("a", pdj_a);
-        row.setFloat("b", pdj_b);
-        row.setFloat("c", pdj_c);
-        row.setFloat("d", pdj_d);
-        
-        saveTable(table, "data.csv");
       }
     }
   }
@@ -413,9 +122,15 @@ void draw() {
  
  
  
+void nameCloud(String word_list[], int list_size){
+  feeling = word_list[(floor(random(0, list_size + 1)))];
+  cloud_name = feeling + clouds[floor(random(0, clouds.length))] + ".jpg";
+  println(cloud_name);
+}
  
  
-//~~~~~~~~~~~~~~~~~DRAW CASES~~~~~~~~~~~~~~~~~~~~~`
+ 
+//~~~~~~~~~~~~~~~~~DRAW CASES~~~~~~~~~~~~~~~~~~~~~
  
  
 void drawVariation(float x, float y) {
@@ -497,16 +212,11 @@ void drawVariation(float x, float y) {
     v.y += y1;
   //v = addF(sinusoidal(v,amount), pdj(v, amount));
   
+  // draws the functions with an offset for the tiled effect
+  // original values are (...0, width/height)
   float xx = map(v.x+0.003*randomGaussian(), x1, x2, -100, width+100);
   float yy = map(v.y+0.003*randomGaussian(), y1, y2, -100, height+100);
-  
-  //float xx = map(v.x+0.003*randomGaussian(), x1, x2, 0, width);
-  //float yy = map(v.y+0.003*randomGaussian(), y1, y2, 0, height);
   point(xx, yy);
-}
-
-void loadData(){
-  table = loadTable("data.csv", "header");
 }
 
 
@@ -549,205 +259,6 @@ PVector subF(PVector v1, PVector v2) { return new PVector(v1.x-v2.x, v1.y-v2.y);
 PVector mulF(PVector v1, PVector v2) { return new PVector(v1.x*v2.x, v1.y*v2.y); }
 PVector divF(PVector v1, PVector v2) { return new PVector(v2.x==0?0:v1.x/v2.x, v2.y==0?0:v1.y/v2.y); }
 
-String[] negative_words = {
-  "ineffective",
-  "unenthused"
-};
-
-//String[] positive_words = {
-//  "bright-eyed",
-//  "hopeful",
-//  "liberal"
-  
-//};
-
-String[] clouds = {
-  "_cirrus_fibratus",
-  "_cirrus_uncinus",
-  "_cirrus_spissatus",
-  "_cirrus_castellanus",
-  "_cirrus_floccus",
-  "_cirrus_fibratus_intortus",
-  "_cirrus_fibratus_vertebratus",
-  "_cirrus_fibratus_radiatus",
-  "_cirrus_uncinus_radiatus",
-  "_cirrus_fibratus_duplicatus",
-  "_cirrus_funcinus_duplicatus",
-  "_cirrus_mammatus",
-  "_cirrus_cirrocumulogenitus",
-  "_cirrus_altocumulogenitus",
-  "_cirrus_cumulonimbogenitus",
-  "_cirrus_homogenitus",
-  "_cirrus_cirrostratomutatus",
-  "_cirrocumulus_stratiformis",
-  "_cirrocumulus_lenticularis",
-  "_cirrocumulus_castellanus",
-  "_cirrocumulus_floccus",
-  "_cirrocumulus_stratiformis_undulatus",
-  "_cirrocumulus_lenticularis_undulatus",
-  "_cirrocumulus_stratiformis_lacunosus",
-  "_cirrocumulus_castellanus_lacunosus",
-  "_cirrocumulus_floccus_lacunosus",
-  "_cirrocumulus_virga",
-  "_cirrocumulus_mammatus",
-  "_cirrocumulus_homogenitus",
-  "_cirrocumulus_cirromutatus",
-  "_cirrocumulus_cirrostratomutatus",
-  "_cirrocumulus_altocumulomutatus",
-  "_cirrostratus_fibratus",
-  "_cirrostratus_nebulosus",
-  "_cirrostratus_fibratus_duplicatus",
-  "_cirrostratus_fibratus_undulatus",
-  "_cirrostratus_cirrocumulogenitus",
-  "_cirrostratus_cumulonimbogenitus",
-  "_cirrostratus_homogenitus",
-  "_cirrostratus_cirromutatus",
-  "_cirrostratus_cirrocumulomutatus",
-  "_cirrostratus_altostratomutatus",
-  "_altocumulus_stratiformis",
-  "_altocumulus_lenticularis",
-  "_altocumulus_volutus",
-  "_altocumulus_castellanus",
-  "_altocumulus_floccus",
-  "_altocumulus_stratiformis_translucidus",
-  "_altocumulus_stratiformis_perlucidus",
-  "_altocumulus_stratiformis_opacus",
-  "_altocumulus_stratiformis_translucidus_radiatus",
-  "_altocumulus_stratiformis_perlucidus_radiatus",
-  "_altocumulus_stratiformis_opacus_radiatus",
-  "_altocumulus_stratiformis_translucidus_duplicatus",
-  "_altocumulus_stratiformis_perlucidus_duplicatus",
-  "_altocumulus_stratiformis_opacus_duplicatus",
-  "_altocumulus_lenticularis_duplicatus",
-  "_altocumulus_stratiformis_translucidus_undulatus",
-  "_altocumulus_stratiformis_perlucidus_undulatus",
-  "_altocumulus_stratiformis_opacus_undulatus",
-  "_altocumulus_lenticularis_undulatus",
-  "_altocumulus_stratiformis_translucidus_lacunosus",
-  "_altocumulus_stratiformis_perlucidus_lacunosus",
-  "_altocumulus_stratiformis_opacus_lacunosus",
-  "_altocumulus_castellanus_lacunosus",
-  "_altocumulus_floccus_lacunosus",
-  "_altocumulus_virga",
-  "_altocumulus_mammatus",
-  "_altocumulus_cumulogenitus",
-  "_altocumulus_cumulonimbogenitus",
-  "_altocumulus_cirrocumulomutatus",
-  "_altocumulus_altostratomutatus",
-  "_altocumulus_nimbostratomutatus",
-  "_altocumulus_stratocumulomutatus",
-  "_altostratus_translucidus",
-  "_altostratus_opacus",
-  "_altostratus_translucidus_radiatus",
-  "_altostratus_opacus_radiatus",
-  "_altostratus_translucidus_duplicatus",
-  "_altostratus_opacus_duplicatus",
-  "_altostratus_translucidus_undulatus",
-  "_altostratus_opacus_undulatus",
-  "_altostratus_virga",
-  "_altostratus_praecipitatio",
-  "_altostratus_mammatus",
-  "_altostratus_pannus",
-  "_altostratus_altocumulogenitus",
-  "_altostratus_cumulonimbogenitus",
-  "_altostratus_cirrostratomutatus",
-  "_altostratus_nimbostratomutatus",
-  "_cumulonimbus_calvus",
-  "_cumulonimbus_capillatus",
-  "_cumulonimbus_virga",
-  "_cumulonimbus_praecipitatio",
-  "_cumulonimbus_incus",
-  "_cumulonimbus_mammatus",
-  "_cumulonimbus_arcus",
-  "_cumulonimbus_tuba",
-  "_cumulonimbus_pannus",
-  "_cumulonimbus_pileus",
-  "_cumulonimbus_velum",
-  "_cumulonimbus_altocumulogenitus",
-  "_cumulonimbus_altostratogenitus",
-  "_cumulonimbus_nimbostratogenitus",
-  "_cumulonimbus_stratocumulogenitus",
-  "_cumulonimbus_flammagenitus",
-  "_cumulonimbus_cumulomutatus",
-  "_cumulus_congestus",
-  "_cumulus_virga",
-  "_cumulus_praecipitatio",
-  "_cumulus_mammatus",
-  "_cumulus_arcus",
-  "_cumulus_tuba",
-  "_cumulus_pannus",
-  "_cumulus_pileus",
-  "_cumulus_velum",
-  "_cumulus_congestus_flammagenitus",
-  "_nimbostratus_virga",
-  "_nimbostratus_praecipitatio",
-  "_nimbostratus_pannus",
-  "_nimbostratus_cumulogenitus",
-  "_nimbostratus_cumulonimbogenitus",
-  "_nimbostratus_altostratomutatus",
-  "_nimbostratus_altocumulomutatus",
-  "_nimbostratus_stratocumulomutatus",
-  "_cumulus_mediocris",
-  "_cumulus_mediocris_radiatus",
-  "_cumulus_virga",
-  "_cumulus_praecipitatio",
-  "_cumulus_mammatus",
-  "_cumulus_pileus",
-  "_cumulus_velum",
-  "_stratocumulus_stratiformis",
-  "_stratocumulus_lenticularis",
-  "_stratocumulus_volutus",
-  "_stratocumulus_floccus",
-  "_stratocumulus_castellanus",
-  "_stratocumulus_stratiformis_translucidus",
-  "_stratocumulus_stratiformis_perlucidus",
-  "_stratocumulus_stratiformis_opacus",
-  "_stratocumulus_stratiformis_translucidus_radiatus",
-  "_stratocumulus_stratiformis_perlucidus_radiatus",
-  "_stratocumulus_stratiformis_opacus_radiatus",
-  "_stratocumulus_stratiformis_translucidus_duplicatus",
-  "_stratocumulus_stratiformis_perlucidus_duplicatus",
-  "_stratocumulus_stratiformis_opacus_duplicatus",
-  "_stratocumulus_lenticularis_duplicatus",
-  "_stratocumulus_stratiformis_translucidus_undulatus",
-  "_stratocumulus_stratiformis_perlucidus_undulatus",
-  "_stratocumulus_stratiformis_opacus_undulatus",
-  "_stratocumulus_lenticularis_undulatus",
-  "_stratocumulus_stratiformis_translucidus_lacunosus",
-  "_stratocumulus_stratiformis_perlucidus_lacunosus",
-  "_stratocumulus_stratiformis_opacus_lacunosus",
-  "_stratocumulus_castellanus_lacunosus",
-  "_stratocumulus_virga",
-  "_stratocumulus_praecipitatio",
-  "_stratocumulus_mammatus",
-  "_stratocumulus_cumulogenitus",
-  "_stratocumulus_nimbostratogenitus",
-  "_stratocumulus_cumulonimbogenitus",
-  "_stratocumulus_altostratogenitus",
-  "_stratocumulus_nimbostratomutatus",
-  "_stratocumulus_altocumulomutatus",
-  "_stratocumulus_stratomutatus",
-  "_cumulus_fractus",
-  "_cumulus_humilis",
-  "_cumulus_humilis_radiatus",
-  "_cumulus_stratocumulogenitus",
-  "_cumulus_homogenitus",
-  "_cumulus_stratocumulomutatus",
-  "_cumulus_stratomutatus",
-  "_stratus_nebulosus",
-  "_stratus_fractus",
-  "_stratus_nebulosus_translucidus",
-  "_stratus_nebulosus_opacus",
-  "_stratus_nebulosus_translucidus_undulatus",
-  "_stratus_nebulosus_opacus_undulatus",
-  "_stratus_praecipitatio",
-  "_stratus_nimbostratogenitus",
-  "_stratus_cumulogenitus",
-  "_stratus_cumulonimbogenitus",
-  "_stratus_cataractagenitus",
-  "_stratus_silvagenitus",
-  "_stratus_stratocumulomutatus",
-};
 
 /// NUMBERS THAT ARENT BROKE 
 //float pdj_a = 1.82;

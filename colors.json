@@ -1,6 +1,10 @@
-{ 
-	"white" : {
-		"color" : "color(230, 15)",
+[ 
+	{ 
+		"name": "white",
+		"red" : 230,
+		"green": 230,
+		"blue": 230,
+		"alpha" : 15,
 		"draw_colors" : {
 			"robins_egg": "pos",
 			"bright_blue": "pos",
@@ -12,19 +16,306 @@
 			"black": "neg"
 		}
 	},
-
-	"blue" : {
-		"color" : "color(230, 15)",
+	{
+		"name": "light_yellow",
+		"red": 234,
+		"green": 233,
+		"blue": 218,
+		"alpha": 15,
+		"draw_colors": {
+			"robins_egg": "pos",
+	    	"bright_blue": "pos",
+	    	"periwinkle": "pos",
+	    	"light_periwinkle": "pos",
+	   		"navy": "neg",
+	    	"blue_grey": "neg",
+	    	"grey": "neg",
+	    	"light_grey": "neg",
+	    	"orange": "pos",
+	    	"pink": "pos",
+	    	"black": "neg"
+		}
+	},
+	{
+		"name": "yellow",
+		"red": 240,
+		"green": 242,
+		"blue": 167,
+		"alpha": 15,
 		"draw_colors" : {
+			"robins_egg": "neg",
+	    	"bright_blue": "neg",
+	    	"periwinkle": "neg",
+	    	"light_periwinkle": "pos",
+	    	"navy": "neg",
+	    	"grey": "neg",
+	    	"light_grey": "pos",
+	    	"pink": "pos",
+	    	"black": "neg"
+		}
+	},
+	{	
+		"name": "robins_egg",
+		"red": 143,
+		"green": 182,
+		"blue": 193,
+		"alpha": 15,
+		"draw_colors" : {
+			"white": "pos",
+	    	"light_yellow": "pos",
+	    	"yellow": "pos",
+	    	"periwinkle": "pos",
+	    	"light_periwinkle": "pos",
+	    	"navy": "neg",
+	    	"blue_grey": "neg",
+	    	"grey": "neg",
+	    	"light_grey": "pos",
+	    	"orange": "pos",
+	    	"pink": "pos",
+	    	"light_pink": "pos",
+	  		"black": "neg",
+	  	}
+	},
+	{
+		"name": "bright_blue",
+		"red": 15,
+		"green": 98,
+		"blue": 155,
+		"alpha": 10,
+		"draw_colors" : {
+			"white": "pos",
+	    	"light_yellow": "pos",
+	    	"yellow": "pos",
+	    	"robins_egg": "pos",
+	    	"periwinkle": "pos",
+	    	"navy": "neg",
+	    	"light_grey": "pos",
+	    	"orange": "neg",
+	    	"light_pink": "pos",
+	    	"pink": "neg",
+	    	"black": "neg"
+		}
+	},
+	{
+		"name": "periwinkle",
+		"red": 91,
+		"green": 111,
+		"blue": 178,
+		"alpha": 15,
+		"draw_colors" : {
+			"white": "pos",
+	    	"light_yellow": "pos",
+	    	"yellow": "pos",
+	    	"robins_egg": "pos",
+	    	"bright_blue": "pos",
+	    	"light_periwinkle": "pos",
+	    	"navy": "pos",
+	    	"blue_grey": "neg",
+	    	"grey": "neg",
+	    	"light_grey": "pos",
+	    	"orange": "pos",
+	    	"light_pink": "pos",
+	    	"pink": "neg",
+	    	"black": "neg"
+		}
+	},
+	{
+		"name" : "light_periwinkle",
+		"red": 172,
+		"green": 188,
+		"blue": 239,
+		"alpha": 15,
+		"draw_colors" : {
+			"white": "pos",
+	    	"light_yellow": "pos",
+	    	"yellow": "pos",
+	    	"robins_egg": "neg",
+	    	"bright_blue": "pos",
+	    	"periwinkle": "pos",
+	    	"navy": "neg",
+	    	"blue_grey": "neg",
+	    	"grey": "neg",
+	    	"orange": "neg",
+	  		"light_pink": "pos",
+	    	"pink": "neg",
+	    	"black": "neg"
+
+		}
+	},
+	{
+		"name": "navy",
+		"red": 24,
+		"green": 24,
+		"blue": 68,
+		"alpha": 10,
+		"draw_colors" : {
+
+			"white": "pos",
+			"light_yellow": "pos",
+			"yellow": "pos",
 			"robins_egg": "pos",
 			"bright_blue": "pos",
+			"periwinkle": "pos",
+			"light_periwinkle": "pos",
+			"blue_grey": "neg",
+			"grey": "neg",
+			"light_grey": "pos",
+			"orange": "pos",
+			"light_pink": "pos",
+			"pink": "neg",
+			"black": "neg"
+		}
+
+	},
+	{
+		"name": "blue_grey",
+		"red": 40,
+		"green": 80,
+		"blue": 107,
+		"alpha": 10,
+		"draw_colors" : {
+			"white": "pos",
+			"light_yellow": "pos",
+			"robins_egg": "pos",
+			"periwinkle": "neg",
+			"light_periwinkle": "pos",
+			"navy": "neg",
+			"light_grey": "pos",
+			"orange": "neg",
+			"pink": "neg",
+			"light_pink": "pos",
+			"black": "neg",
+
+		}
+	},
+	{
+		"name": "grey",
+		"red": 92,
+		"green": 95,
+		"blue": 96,
+		"alpha": 10,
+		"draw_colors" : {
+			 "white": "neg",
+ 			"light_yellow": "neg",
+			"yellow": "neg",
+			"robins_egg": "pos",
+			"periwinkle": "neg",
+			"light_periwinkle": "neg",
+			"navy": "neg",
+			"light_grey": "neg",
+			"orange": "neg",
+			"light_pink": "neg",
+			"pink": "neg",
+			"black": "neg",
+		}
+	},
+	{
+		"name": "light_grey",
+		"red": 198,
+		"green": 198,
+		"blue": 198,
+		"alpha": 15,
+		"draw_colors" : {
+			"white": "neg",
+			"light_yellow": "neg",
+ 			"yellow": "neg",
+			"robins_egg": "pos",
+			"bright_blue": "neg",
+			"periwinkle": "neg",
+			"navy": "neg",
+			"blue_grey": "neg",
+			"grey": "neg",
+			"orange": "neg",
+			"pink": "neg",
+
+		}
+	},
+	{
+		"name": "orange",
+		"red": 237,
+		"green": 283,
+		"blue": 123,
+		"alpha": 10,
+		"draw_colors" : {
+			 "white": "pos",
+ 			"light_yellow": "pos",
+			"yellow": "pos",
+			"robins_egg": "pos",
+			"bright_blue": "pos",
+			"periwinkle": "pos",
+			"light_periwinkle": "pos",
+			"navy": "neg",
+			"grey": "neg",
+			"light_grey": "pos",
+			"pink": "pos",
+			"light_pink": "pos",
+			"black": "neg",
+
+		}
+	},
+	{
+		"name": "light_pink",
+		"red": 232,
+		"green": 220,
+		"blue": 218,
+		"alpha": 15,
+		"draw_colors" : {
+			"robins_egg": "pos",
+			"bright_blue": "neg",
+			"periwinkle": "neg",
+			"light_periwinkle": "pos",
 			"navy": "pos",
 			"blue_grey": "neg",
 			"grey": "neg",
 			"orange": "pos",
 			"pink": "pos",
-			"black": "neg"
+			"black": "neg",
+		}
+	},
+	{
+		"name": "pink",
+		"red": 130,
+		"green": 97,
+		"blue": 121,
+		"alpha": 15,
+		"draw_colors" : {
+			"white": "pos",
+			"light_yellow": "pos",
+			"yellow": "pos",
+			"robins_egg": "pos",
+			"bright_blue": "pos",
+			"light_periwinkle": "pos",
+			"navy": "pos",
+			"light_grey": "pos",
+			"orange": "pos",
+			"light_pink": "pos",
+ 			"black": "neg",
+		}
+	},
+
+	{
+		"name" : "black",
+		"red": 5,
+		"green": 5,
+		"blue": 5,
+		"alpha": 15,
+		"draw_colors" : {
+			"white": "pos",
+			"light_yellow": "neg",
+			"yellow": "neg",
+			"robins_egg": "neg",
+			"bright_blue": "pos",
+			"periwinkle": "neg",
+			"light_periwinkle": "neg",
+			"navy": "neg",
+			"blue_grey": "neg",
+			"grey": "neg",
+			"light_grey": "neg",
+			"orange": "neg",
+			"light_pink": "neg",
+			"pink": "pos",
+
 		}
 	}
 
-}
+]
