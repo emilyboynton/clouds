@@ -4,16 +4,7 @@ import java.util.Random;
 
 JSONArray json;
 
-//  TO DO
-//  1. create hashmap for the output clouds & count
-//      A. also add new var/cond for count
-//  2. maybe hash them? also maybe colors?
-//  3. rework the pos/neg values
-//  4. copy over data.csv and start new one --why?
-//  5. THEN reorganize/group function types
-//  6. comment up this bitch and remove legacy code/ prints
-//  7. rename variables sz, feeling, etc more accurately 
-//  8. check edge cases, make sure you've seen all colors/cloud names
+//  REFACTOR REFACTOR REFACTOR
 
 float sz = random(1, 2);
 String [] positive_words, negative_words, clouds;
@@ -29,18 +20,14 @@ float pdj_b = random(-3, 2);
 float pdj_c = random(-3, 2);
 float pdj_d = random(-1, 1);
 
-//
-String feeling, cloud_name;
-
+String feeling, cloud_name, pos_or_neg;
 
 
 HashMap<String, Integer> used_clouds = new HashMap<String, Integer>();
 
-int st;
-String pos_or_neg;
 boolean go = true;
 
-float amount = random(1, 2);
+float amount = random(1, 5);
 int func_type = floor(random(1, 21));
 
 
@@ -73,7 +60,9 @@ void setup() {
     JSONObject background_obj = json.getJSONObject(rand);
     println(background_obj.getString("name"));
     String background_name = background_obj.getString("name");
-    background = color(background_obj.getInt("red"), background_obj.getInt("green"), background_obj.getInt("blue"));
+    background = color(background_obj.getInt("red"), 
+                       background_obj.getInt("green"), 
+                       background_obj.getInt("blue"));
     background(background);
 
 
@@ -86,13 +75,12 @@ void setup() {
       foreground_name = foreground_obj.getString("name");    
       pos_or_neg = drawColors_obj.getString(foreground_name);
       foreground = color(foreground_obj.getInt("red"),
-      foreground_obj.getInt("green"),
-      foreground_obj.getInt("blue"),
-      foreground_obj.getInt("alpha"));
+                          foreground_obj.getInt("green"),
+                          foreground_obj.getInt("blue"),
+                          foreground_obj.getInt("alpha"));
     }
-    
-    println(foreground_name, pos_or_neg);
   
+  println(foreground_name);
   stroke(foreground);  
   x1=y1=-sz;
   x2=y2=sz;
@@ -301,3 +289,15 @@ PVector divF(PVector v1, PVector v2) { return new PVector(v2.x==0?0:v1.x/v2.x, v
 
 //!!!!!!!!!!
 //       v = sinusoidal(julia(d_pdj(v, amount), amount), amount);
+
+
+//  TO DO
+//  1. create hashmap for the output clouds & count
+//      A. also add new var/cond for count
+//  2. maybe hash them? also maybe colors?
+//  3. rework the pos/neg values
+//  4. 
+//  5. THEN reorganize/group function types
+//  6. comment up this bitch and remove legacy code/ prints
+//  7. rename variables more accurately 
+//  8. check edge cases, make sure you've seen all colors/cloud names
