@@ -12,15 +12,20 @@ Cloud Bot is inspired by the work of @tsulej and the Twitter bot @colorschemez
 Below are a few examples of the images with the descriptive filename-captions written below.
 
 ![Cloud Bot 1](https://github.com/emilyboynton/clouds/blob/master/images/calamitous_altostratus_translucidus_duplicatus.jpg "calamitous_altostratus_translucidus_duplicatus.jpg")
-##### calamitous_altostratus_translucidus_duplicatus.jpg
+#### calamitous_altostratus_translucidus_duplicatus.jpg
+
 
 ![Cloud Bot 2](https://github.com/emilyboynton/clouds/blob/master/images/petty_stratocumulus_stratiformis_opacus.jpg "petty_stratocumulus_stratiformis_opacus.jpg")
-##### petty_stratocumulus_stratiformis_opacus.jpg
+#### petty_stratocumulus_stratiformis_opacus.jpg
+
+
 ![Cloud Bot 3](https://github.com/emilyboynton/clouds/blob/master/images/raging_cirrocumulus_castellanus_lacunosus.jpg "raging_cirrocumulus_castellanus_lacunosus.jpg")
-##### raging_cirrocumulus_castellanus_lacunosus.jpg
+#### raging_cirrocumulus_castellanus_lacunosus.jpg
+
 
 ![Cloud Bot 4](https://github.com/emilyboynton/clouds/blob/master/images/scheming_stratus_silvagenitus.jpg  "cheming_stratus_silvagenitus.jpg")
-##### scheming_stratus_silvagenitus.jpg
+#### scheming_stratus_silvagenitus.jpg
+
 
 ![Cloud Bot 5](https://github.com/emilyboynton/clouds/blob/master/images/unbeguiled_cumulonimbus_calvus.jpg "unbeguiled_cumulonimbus_calvus.jpg")
-##### unbeguiled_cumulonimbus_calvus.jpg
+#### unbeguiled_cumulonimbus_calvus.jpg
